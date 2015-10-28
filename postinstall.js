@@ -15,12 +15,29 @@ if (fs.existsSync(tsconfigPath)) {
 	}
 }
 
-tsconfig.compilerOptions = tsconfig.compilerOptions || {};
-tsconfig.compilerOptions.module = 'commonjs';
+tsconfig.compilerOptions = tsconfig.compilerOptions || {
+	inlineSourceMap: true,
+	target: "es5",
+	experimentalDecorators: true,
+	module: "commonjs"
+};
+
+var coreModulesPath = 'node_modules/tns-core-modules/';
+var coreModulesTypingsPath = 'node_modules/tns-core-modules/tns-core-modules.d.ts';
+
+try {
+	var coreModulesPackageJson = JSON.parse(fs.readFileSync(path.join(projectDir, coreModulesPath, 'package.json')));
+	if (coreModulesPackageJson.typings) {
+		coreModulesTypingsPath = coreModulesPath + coreModulesPackageJson.typings;
+	}
+} catch (err) {
+	console.warn('tns-core-modules/package.json: ' + err.toString());
+}
+
 
 var expectedGlobs = [
 	'app/**/*.ts',
-	'node_modules/tns-core-modules/typings/declarations.d.ts',
+	coreModulesTypingsPath,
 ];
 
 tsconfig.files = tsconfig.files || [];
