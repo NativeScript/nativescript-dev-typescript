@@ -1,4 +1,4 @@
-require('./nativescript-hook').postinstall(__dirname);
+require('nativescript-hook').postinstall(__dirname);
 
 var fs = require('fs');
 var path = require('path');
@@ -15,12 +15,7 @@ if (fs.existsSync(tsconfigPath)) {
 	}
 }
 
-tsconfig.compilerOptions = tsconfig.compilerOptions || {
-	inlineSourceMap: true,
-	target: "es5",
-	experimentalDecorators: true,
-	module: "commonjs"
-};
+tsconfig.compilerOptions = tsconfig.compilerOptions || require('./lib/ts-defaults');
 
 var coreModulesPath = 'node_modules/tns-core-modules/';
 var coreModulesTypingsPath = 'node_modules/tns-core-modules/tns-core-modules.d.ts';
