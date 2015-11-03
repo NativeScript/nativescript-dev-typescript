@@ -1,6 +1,6 @@
 {
   "name": "nativescript-dev-typescript",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "TypeScript support for NativeScript projects. Install using `tns install typescript`.",
   "scripts": {
     "test": "exit 0",
@@ -23,6 +23,6 @@
   "dependencies": {
     "grunt": ">=0.4.5",
     "grunt-ts": ">=5.1.0",
-    "nativescript-hook": "^0.1.0"
+    "nativescript-hook": "^0.2.0"
   }
 }
