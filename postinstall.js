@@ -1,4 +1,4 @@
-var hook = equire('nativescript-hook')(__dirname);
+var hook = require('nativescript-hook')(__dirname);
 hook.postinstall();
 
 var fs = require('fs');
@@ -22,7 +22,12 @@ function createTsconfig() {
 		}
 	}
 
-	tsconfig.compilerOptions = tsconfig.compilerOptions || require('./lib/ts-defaults');
+	tsconfig.compilerOptions = tsconfig.compilerOptions || {
+		module: "commonjs",
+		target: "es5",
+		inlineSourceMap: true,
+		experimentalDecorators: true,
+	};
 
 	var coreModulesPath = 'node_modules/tns-core-modules/';
 	var coreModulesTypingsPath = 'node_modules/tns-core-modules/tns-core-modules.d.ts';
