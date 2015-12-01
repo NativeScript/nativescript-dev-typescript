@@ -27,7 +27,10 @@ function createTsconfig() {
 		target: "es5",
 		inlineSourceMap: true,
 		experimentalDecorators: true,
+		noEmitHelpers: true,
 	};
+
+	tsconfig.exclude = ['node_modules/typescript'];
 
 	var coreModulesPath = 'node_modules/tns-core-modules/';
 	var coreModulesTypingsPath = 'node_modules/tns-core-modules/tns-core-modules.d.ts';
@@ -40,20 +43,6 @@ function createTsconfig() {
 	} catch (err) {
 		console.warn('tns-core-modules/package.json: ' + err.toString());
 	}
-
-
-	var expectedGlobs = [
-		'app/**/*.ts',
-		coreModulesTypingsPath,
-	];
-
-	tsconfig.files = tsconfig.files || [];
-	var files = tsconfig.filesGlob = tsconfig.filesGlob || [];
-	expectedGlobs.forEach(function (glob) {
-		if (files.indexOf(glob) === -1) {
-			files.unshift(glob);
-		}
-	});
 
 	fs.writeFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 4));
 }
