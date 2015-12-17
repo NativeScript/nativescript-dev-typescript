@@ -1,6 +1,6 @@
 {
   "name": "nativescript-dev-typescript",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "TypeScript support for NativeScript projects. Install using `tns install typescript`.",
   "scripts": {
     "test": "exit 0",
@@ -27,9 +27,6 @@
     "url": "https://github.com/NativeScript/nativescript-dev-typescript.git"
   },
   "dependencies": {
-    "gaze": "^0.5.2",
-    "glob": "^5.0.15",
-    "lodash": "^3.10.1",
     "nativescript-hook": "^0.2.0"
   }
 }
