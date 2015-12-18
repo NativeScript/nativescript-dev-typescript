@@ -7,7 +7,17 @@ var path = require('path');
 var projectDir = hook.findProjectDir();
 if (projectDir) {
 	createTsconfig();
+	createReferenceFile();
 	installTypescript();
+}
+
+function createReferenceFile() {
+	var referenceFilePath = path.join(projectDir, 'references.d.ts'),
+		content = '/// <reference path="./node_modules/tns-core-modules/tns-core-modules.d.ts" /> Needed for autocompletion and compilation.';
+
+	if (!fs.existsSync(referenceFilePath) || fs.readFileSync(referenceFilePath, { encoding: 'utf8' }).indexOf(content) === -1) {
+		fs.appendFileSync(referenceFilePath, content);
+	}
 }
 
 function createTsconfig() {
@@ -30,7 +40,7 @@ function createTsconfig() {
 		noEmitHelpers: true,
 	};
 
-	tsconfig.exclude = ['node_modules/typescript'];
+	tsconfig.exclude = ['node_modules', 'platforms'];
 
 	var coreModulesPath = 'node_modules/tns-core-modules/';
 	var coreModulesTypingsPath = 'node_modules/tns-core-modules/tns-core-modules.d.ts';
