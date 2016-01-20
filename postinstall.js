@@ -35,7 +35,7 @@ function createTsconfig() {
 	tsconfig.compilerOptions = tsconfig.compilerOptions || {
 		module: "commonjs",
 		target: "es5",
-		inlineSourceMap: true,
+		sourceMap: true,
 		experimentalDecorators: true,
 		noEmitHelpers: true,
 	};
