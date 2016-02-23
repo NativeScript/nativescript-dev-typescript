@@ -15,7 +15,7 @@ function createReferenceFile() {
 	var referenceFilePath = path.join(projectDir, 'references.d.ts'),
 		content = '/// <reference path="./node_modules/tns-core-modules/tns-core-modules.d.ts" /> Needed for autocompletion and compilation.';
 
-	if (!fs.existsSync(referenceFilePath) || fs.readFileSync(referenceFilePath, { encoding: 'utf8' }).indexOf(content) === -1) {
+	if (!fs.existsSync(referenceFilePath)) {
 		fs.appendFileSync(referenceFilePath, content);
 	}
 }
