@@ -57,12 +57,31 @@ function createTsconfig() {
 	fs.writeFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 4));
 }
 
+function getProjectTypeScriptVersion() {
+	try {
+		var packageJsonPath = path.join(projectDir, "package.json"),
+			packageJsonContent = fs.readFileSync(packageJsonPath, "utf8"),
+			jsonContent = JSON.parse(packageJsonContent);
+
+		return (jsonContent.dependencies && jsonContent.dependencies.typescript)
+			|| (jsonContent.devDependencies && jsonContent.devDependencies.typescript);
+	} catch(err) {
+		console.error(err);
+		return null;
+	}
+}
+
 function installTypescript() {
-	require('child_process').exec('npm install --save-dev typescript', { cwd: projectDir }, function (err, stdout, stderr) {
-		if (err) {
-			console.warn('npm: ' + err.toString());
-		}
-		process.stdout.write(stdout);
-		process.stderr.write(stderr);
-	});
+	var installedTypeScriptVersion = getProjectTypeScriptVersion();
+	if(installedTypeScriptVersion) {
+		console.log("Project already targets TypeScript " + installedTypeScriptVersion);
+	} else {
+		require('child_process').exec('npm install --save-dev typescript', { cwd: projectDir }, function (err, stdout, stderr) {
+			if (err) {
+				console.warn('npm: ' + err.toString());
+			}
+			process.stdout.write(stdout);
+			process.stderr.write(stderr);
+		});
+	}
 }
