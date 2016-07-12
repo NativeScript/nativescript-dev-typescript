@@ -24,15 +24,7 @@ function createTsconfig() {
 	var tsconfigPath = path.join(projectDir, 'tsconfig.json');
 	var tsconfig = {};
 
-	if (fs.existsSync(tsconfigPath)) {
-		try {
-			tsconfig = JSON.parse(fs.readFileSync(tsconfigPath))
-		} catch (err) {
-			console.warn('tsconfig.json: ' + err.toString());
-		}
-	}
-
-	tsconfig.compilerOptions = tsconfig.compilerOptions || {
+	tsconfig.compilerOptions = {
 		module: "commonjs",
 		target: "es5",
 		sourceMap: true,
@@ -44,19 +36,9 @@ function createTsconfig() {
 
 	tsconfig.exclude = ['node_modules', 'platforms'];
 
-	var coreModulesPath = 'node_modules/tns-core-modules/';
-	var coreModulesTypingsPath = 'node_modules/tns-core-modules/tns-core-modules.d.ts';
-
-	try {
-		var coreModulesPackageJson = JSON.parse(fs.readFileSync(path.join(projectDir, coreModulesPath, 'package.json')));
-		if (coreModulesPackageJson.typings) {
-			coreModulesTypingsPath = coreModulesPath + coreModulesPackageJson.typings;
-		}
-	} catch (err) {
-		console.warn('tns-core-modules/package.json: ' + err.toString());
+    if (!fs.existsSync(tsconfigPath)) {
+	    fs.appendFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 4));
 	}
-
-	fs.writeFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 4));
 }
 
 function getProjectTypeScriptVersion() {
