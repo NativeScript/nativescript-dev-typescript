@@ -27,7 +27,6 @@ function createTsconfig() {
 	tsconfig.compilerOptions = {
 		module: "commonjs",
 		target: "es5",
-		sourceMap: true,
 		experimentalDecorators: true,
 		emitDecoratorMetadata: true,
 		noEmitHelpers: true,
