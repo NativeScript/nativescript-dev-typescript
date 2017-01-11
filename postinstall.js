@@ -6,7 +6,12 @@ var path = require('path');
 
 var projectDir = hook.findProjectDir();
 if (projectDir) {
-	createTsconfig();
+	var tsconfigPath = path.join(projectDir, 'tsconfig.json');
+	if (fs.existsSync(tsconfigPath)) {
+		migrateTsconfig(tsconfigPath);
+	} else {
+		createTsconfig(tsconfigPath);
+	}
 	createReferenceFile();
 	installTypescript();
 }
@@ -20,8 +25,29 @@ function createReferenceFile() {
 	}
 }
 
-function createTsconfig() {
-	var tsconfigPath = path.join(projectDir, 'tsconfig.json');
+function migrateTsconfig(tsconfigPath) {
+	var displaybleTsconfigPath = path.relative(projectDir, tsconfigPath);
+
+	try {
+		var existingConfigContents = fs.readFileSync(tsconfigPath);
+		var existingConfig = JSON.parse(existingConfigContents);
+	} catch (e) {
+		console.error("Invalid " + displaybleTsconfigPath + ": " + e);
+		return;
+	}
+
+	if (existingConfig["compilerOptions"]) {
+		if ("sourceMap" in existingConfig["compilerOptions"]) {
+			delete existingConfig["compilerOptions"]["sourceMap"];
+			console.warn("> Deleted \"compilerOptions.sourceMap\" setting in \"" + displaybleTsconfigPath + "\".");
+			console.warn("> Inline source maps will be used when building in Debug configuration from now on.");
+		}
+	}
+
+	fs.writeFileSync(tsconfigPath, JSON.stringify(existingConfig, null, 4));
+}
+
+function createTsconfig(tsconfigPath) {
 	var tsconfig = {};
 
 	tsconfig.compilerOptions = {
@@ -35,9 +61,7 @@ function createTsconfig() {
 
 	tsconfig.exclude = ['node_modules', 'platforms', "**/*.aot.ts"];
 
-	if (!fs.existsSync(tsconfigPath)) {
-		fs.appendFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 4));
-	}
+	fs.writeFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 4));
 }
 
 function getProjectTypeScriptVersion() {
