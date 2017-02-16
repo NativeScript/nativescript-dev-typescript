@@ -54,13 +54,29 @@ function addIterableToAngularProjects(existingConfig) {
 }
 
 function addDomLibs(existingConfig) {
-	var packageJsonPath = path.join(projectDir, "package.json");
-	var packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
-	var dependencies = packageJson.dependencies || [];
+	function relevantModulesVersion(version) {
+		return /[3-9]\.\d+\.\d+/i.test(version);
+	}
 
-	var hasRelevantModules = dependencies["tns-core-modules"] &&
-		/[3-9]\.\d+\.\d+/i.test(dependencies["tns-core-modules"]);
-	if (hasRelevantModules) {
+	function hasRelevantModulesDependency() {
+		var packageJsonPath = path.join(projectDir, "package.json");
+		var packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
+		var dependencies = packageJson.dependencies || [];
+
+		return relevantModulesVersion(dependencies["tns-core-modules"]);
+	}
+
+	function hasRelevantModulesPackage() {
+		var packageJsonPath = path.join(projectDir, "node_modules", "tns-core-modules", "package.json");
+		if (!fs.existsSync(packageJsonPath)) {
+			return false;
+		}
+
+		var packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
+		return relevantModulesVersion(packageJson.version);
+	}
+
+	if (hasRelevantModulesDependency() || hasRelevantModulesPackage()) {
 		addTsLib(existingConfig, "es6");
 		addTsLib(existingConfig, "dom");
 	}
