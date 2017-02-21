@@ -48,7 +48,8 @@ function addIterableToAngularProjects(existingConfig) {
 	var dependencies = packageJson.dependencies || [];
 
 	var hasAngular = Object.keys(dependencies).includes("nativescript-angular");
-	if (hasAngular) {
+    var hasRelevantAngularVersion = /[4-9]\.\d+\.\d+/i.test(dependencies["@angular/core"]);
+	if (hasAngular && hasRelevantAngularVersion) {
 		addTsLib(existingConfig, "es2015.iterable");
 	}
 }
