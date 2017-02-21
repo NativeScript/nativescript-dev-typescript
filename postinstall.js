@@ -50,6 +50,7 @@ function addIterableToAngularProjects(existingConfig) {
 	var hasAngular = Object.keys(dependencies).includes("nativescript-angular");
     var hasRelevantAngularVersion = /[4-9]\.\d+\.\d+/i.test(dependencies["@angular/core"]);
 	if (hasAngular && hasRelevantAngularVersion) {
+        console.log("Adding 'es2015.iterable' lib to tsconfig.json...");
 		addTsLib(existingConfig, "es2015.iterable");
 	}
 }
@@ -78,7 +79,9 @@ function addDomLibs(existingConfig) {
 	}
 
 	if (hasRelevantModulesDependency() || hasRelevantModulesPackage()) {
+        console.log("Adding 'es6' lib to tsconfig.json...");
 		addTsLib(existingConfig, "es6");
+        console.log("Adding 'dom' lib to tsconfig.json...");
 		addTsLib(existingConfig, "dom");
 	}
 }
