@@ -5,6 +5,7 @@ var __migrations = [
 	inlineSourceMapMigration,
 	addDomLibs,
 	addIterableToAngularProjects,
+	addTnsCoreModulesPathMappings,
 ];
 
 function migrateProject(tsConfig, tsconfigPath, projectDir) {
@@ -60,7 +61,7 @@ function addIterableToAngularProjects(existingConfig, displayableTsconfigPath, p
 	}
 }
 
-function addDomLibs(existingConfig, displayableTsconfigPath, projectDir) {
+function hasModules30(projectDir) {
 	function relevantModulesVersion(version) {
 		return /[3-9]\.\d+\.\d+/i.test(version);
 	}
@@ -83,10 +84,14 @@ function addDomLibs(existingConfig, displayableTsconfigPath, projectDir) {
 		return relevantModulesVersion(packageJson.version);
 	}
 
-	if (hasRelevantModulesDependency() || hasRelevantModulesPackage()) {
-        console.log("Adding 'es6' lib to tsconfig.json...");
+	return hasRelevantModulesDependency() || hasRelevantModulesPackage();
+}
+
+function addDomLibs(existingConfig, displayableTsconfigPath, projectDir) {
+	if (hasModules30(projectDir)) {
+		console.log("Adding 'es6' lib to tsconfig.json...");
 		addTsLib(existingConfig, "es6");
-        console.log("Adding 'dom' lib to tsconfig.json...");
+		console.log("Adding 'dom' lib to tsconfig.json...");
 		addTsLib(existingConfig, "dom");
 	}
 }
@@ -102,5 +107,19 @@ function addTsLib(existingConfig, libName) {
 			})) {
 			options.lib.push(libName);
 		}
+	}
+}
+
+function addTnsCoreModulesPathMappings(existingConfig, displayableTsconfigPath, projectDir) {
+	if (hasModules30(projectDir)) {
+		console.log("Adding tns-core-modules path mappings lib to tsconfig.json...");
+		existingConfig["compilerOptions"] = existingConfig["compilerOptions"] || {};
+		var compilerOptions = existingConfig["compilerOptions"];
+		compilerOptions["baseUrl"] = ".";
+		compilerOptions["paths"] = compilerOptions["paths"] || {};
+		compilerOptions["paths"]["*"] = [
+			"./node_modules/tns-core-modules/*",
+			"./node_modules/*"
+		];
 	}
 }
