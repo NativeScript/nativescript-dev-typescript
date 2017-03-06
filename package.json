@@ -1,6 +1,6 @@
 {
   "name": "nativescript-dev-typescript",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "TypeScript support for NativeScript projects. Install using `tns install typescript`.",
   "scripts": {
     "test": "exit 0",
