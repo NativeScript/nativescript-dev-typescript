@@ -13,7 +13,9 @@ if (projectDir) {
 	} else {
 		createTsconfig(tsconfigPath);
 	}
-	createReferenceFile();
+	if (!upgrader.hasModules30(projectDir)) {
+		createReferenceFile();
+	}
 	installTypescript();
 }
 

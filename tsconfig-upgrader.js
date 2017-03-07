@@ -86,6 +86,7 @@ function hasModules30(projectDir) {
 
 	return hasRelevantModulesDependency() || hasRelevantModulesPackage();
 }
+exports.hasModules30 = hasModules30;
 
 function addDomLibs(existingConfig, displayableTsconfigPath, projectDir) {
 	if (hasModules30(projectDir)) {
