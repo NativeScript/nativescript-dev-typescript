@@ -69,7 +69,7 @@ function installTypescript({force = false} = {}) {
 	if (installedTypeScriptVersion && !force) {
 		console.log("Project already targets TypeScript " + installedTypeScriptVersion);
 	} else {
-        const command = force ? "npm install -D typescript" : "npm update -D typescript";
+        const command = force ? "npm install -D typescript@latest" : "npm update -D typescript";
 
         console.log("Installing TypeScript...");
 
