@@ -8,15 +8,18 @@ var upgrader = require("./tsconfig-upgrader");
 var projectDir = hook.findProjectDir();
 if (projectDir) {
 	var tsconfigPath = path.join(projectDir, "tsconfig.json");
+    var hasModules30 = upgrader.hasModules30(projectDir);
 	if (fs.existsSync(tsconfigPath)) {
 		upgrader.migrateTsConfig(tsconfigPath, projectDir);
 	} else {
 		createTsconfig(tsconfigPath);
 	}
-	if (!upgrader.hasModules30(projectDir)) {
+
+	if (!hasModules30) {
 		createReferenceFile();
 	}
-	installTypescript();
+
+	installTypescript({force: hasModules30});
 }
 
 function createReferenceFile() {
@@ -60,12 +63,17 @@ function getProjectTypeScriptVersion() {
 	}
 }
 
-function installTypescript() {
-	var installedTypeScriptVersion = getProjectTypeScriptVersion();
-	if (installedTypeScriptVersion) {
+function installTypescript({force = false} = {}) {
+	const installedTypeScriptVersion = getProjectTypeScriptVersion();
+
+	if (installedTypeScriptVersion && !force) {
 		console.log("Project already targets TypeScript " + installedTypeScriptVersion);
 	} else {
-		require("child_process").exec("npm install --save-dev typescript", { cwd: projectDir }, function (err, stdout, stderr) {
+        const command = force ? "npm install -D typescript" : "npm update -D typescript";
+
+        console.log("Installing TypeScript...");
+
+		require("child_process").exec(command, { cwd: projectDir }, function (err, stdout, stderr) {
 			if (err) {
 				console.warn("npm: " + err.toString());
 			}
