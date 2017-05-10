@@ -1,3 +1,13 @@
+<a name="0.4.4"></a>
+## [0.4.4](https://github.com/NativeScript/nativescript-dev-typescript/compare/0.4.3...0.4.4) (2017-05-10)
+
+
+### Bug Fixes
+
+* **postinstall:** update TS version on NS3 only if <2.2 ([#31](https://github.com/NativeScript/nativescript-dev-typescript/issues/31)) ([95bd5e8](https://github.com/NativeScript/nativescript-dev-typescript/commit/95bd5e8))
+
+
+
 <a name="0.4.3"></a>
 ## 0.4.3 (2017-05-09)
 
