@@ -118,7 +118,7 @@ function addTnsCoreModulesPathMappings(existingConfig, displayableTsconfigPath, 
 		var compilerOptions = existingConfig["compilerOptions"];
 		compilerOptions["baseUrl"] = ".";
 		compilerOptions["paths"] = compilerOptions["paths"] || {};
-		compilerOptions["paths"]["*"] = [
+		compilerOptions["paths"]["*"] = compilerOptions["paths"]["*"] || [
 			"./node_modules/tns-core-modules/*",
 			"./node_modules/*"
 		];
