@@ -1,3 +1,13 @@
+<a name="0.4.6"></a>
+## [0.4.6](https://github.com/NativeScript/nativescript-dev-typescript/compare/0.4.5...0.4.6) (2017-06-09)
+
+
+### Features
+
+* skip adding paths to tsconfig on postinstall ([33845fa](https://github.com/NativeScript/nativescript-dev-typescript/commit/33845fa))
+
+
+
 <a name="0.4.5"></a>
 ## [0.4.5](https://github.com/NativeScript/nativescript-dev-typescript/compare/0.4.4...0.4.5) (2017-05-17)
 
