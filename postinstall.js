@@ -1,17 +1,20 @@
-var hook = require("nativescript-hook")(__dirname);
+const hook = require("nativescript-hook")(__dirname);
 hook.postinstall();
 
-var fs = require("fs");
-var path = require("path");
-var upgrader = require("./tsconfig-upgrader");
+const fs = require("fs");
+const path = require("path");
+const upgrader = require("./tsconfig-upgrader");
 
-var projectDir = hook.findProjectDir();
+const ENV_VARS = process.env;
+const KEEP_TS_CONFIG = true;
+
+const projectDir = hook.findProjectDir();
 if (projectDir) {
     const tsconfigPath = path.join(projectDir, "tsconfig.json");
-    if (fs.existsSync(tsconfigPath)) {
-        upgrader.migrateTsConfig(tsconfigPath, projectDir);
-    } else {
+    if (!fs.existsSync(tsconfigPath)) {
         createTsconfig(tsconfigPath);
+    } else if (!KEEP_TS_CONFIG) {
+        upgrader.migrateTsConfig(tsconfigPath, projectDir);
     }
 
     const hasModules30 = upgrader.hasModules30(projectDir);
@@ -23,7 +26,7 @@ if (projectDir) {
 }
 
 function createReferenceFile() {
-    var referenceFilePath = path.join(projectDir, "references.d.ts"),
+    const referenceFilePath = path.join(projectDir, "references.d.ts"),
         content = "/// <reference path=\"./node_modules/tns-core-modules/tns-core-modules.d.ts\" /> Needed for autocompletion and compilation.";
 
     if (!fs.existsSync(referenceFilePath)) {
@@ -32,7 +35,7 @@ function createReferenceFile() {
 }
 
 function createTsconfig(tsconfigPath) {
-    var tsconfig = {};
+    const tsconfig = {};
 
     tsconfig.compilerOptions = {
         module: "commonjs",
@@ -51,9 +54,9 @@ function createTsconfig(tsconfigPath) {
 
 function getProjectTypeScriptVersion() {
     try {
-        var packageJsonPath = path.join(projectDir, "package.json"),
-            packageJsonContent = fs.readFileSync(packageJsonPath, "utf8"),
-            jsonContent = JSON.parse(packageJsonContent);
+        const packageJsonPath = path.join(projectDir, "package.json");
+        const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
+        const jsonContent = JSON.parse(packageJsonContent);
 
         return (jsonContent.dependencies && jsonContent.dependencies.typescript) ||
             (jsonContent.devDependencies && jsonContent.devDependencies.typescript);
