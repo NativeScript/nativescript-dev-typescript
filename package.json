@@ -1,6 +1,6 @@
 {
   "name": "nativescript-dev-typescript",
-  "version": "0.4.5",
+  "version": "0.5.0",
   "description": "TypeScript support for NativeScript projects. Install using `tns install typescript`.",
   "scripts": {
     "test": "exit 0",
@@ -20,6 +20,11 @@
       {
         "type": "before-watch",
         "script": "lib/watch.js",
+        "inject": true
+      },
+      {
+        "type": "after-watch",
+        "script": "lib/after-watch.js",
         "inject": true
       }
     ]
