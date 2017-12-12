@@ -44,7 +44,7 @@ function createTsconfig(tsconfigPath) {
     };
     upgrader.migrateProject(tsconfig, tsconfigPath, projectDir);
 
-    tsconfig.exclude = ["node_modules", "platforms", "**/*.aot.ts"];
+    tsconfig.exclude = ["node_modules", "platforms"];
 
     fs.writeFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 4));
 }
