@@ -50,7 +50,7 @@ git remote add upstream https://github.com/NativeScript/nativescript-dev-typescr
 2. Set up the project:
 
 ```bash
-#In the repo root
+# In the repo root
 npm install --ignore-scripts
 ```
 

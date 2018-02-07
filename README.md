@@ -16,7 +16,7 @@ The above command adds `nativescript-dev-typescript` package as dev dependency a
 
 When the plugin installed what it will do out of the box is to add
  - `tsconfig.json` file to the project (if it doesn't exist), 
- - `typescript` as dependency 
+ - `typescript` as dev dependency
  - `before-prepare` hook which takes care to transpile all files before preparing your project
  - `before-watch` hook to start the typescript watcher and transpile on every typescript change during project livesync
  - `after-watch` hook to stop the typescript watcher after the livesync is stopped
