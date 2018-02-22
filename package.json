@@ -18,6 +18,11 @@
         "inject": true
       },
       {
+        "type": "before-watchPatterns",
+        "script": "lib/before-watchPatterns.js",
+        "inject": true
+      },
+      {
         "type": "before-watch",
         "script": "lib/watch.js",
         "inject": true
