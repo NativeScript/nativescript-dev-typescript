@@ -40,6 +40,7 @@
     "url": "https://github.com/NativeScript/nativescript-dev-typescript.git"
   },
   "dependencies": {
-    "nativescript-hook": "^0.2.0"
+    "nativescript-hook": "^0.2.0",
+    "semver": "5.5.0"
   }
 }
