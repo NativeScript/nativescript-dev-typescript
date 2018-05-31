@@ -1,3 +1,10 @@
+
+<a name="0.7.1"></a>
+## [0.7.1](https://github.com/NativeScript/nativescript-dev-typescript/compare/v0.7.0...v0.7.1) (2018-04-13)
+
+### Bug Fixes
+* Console output is cleared when the TypeScript watcher is started.
+
 <a name="0.4.5"></a>
 ## [0.4.5](https://github.com/NativeScript/nativescript-dev-typescript/compare/0.4.4...0.4.5) (2017-05-17)
 
