@@ -118,12 +118,27 @@ function addTnsCoreModulesPathMappings(existingConfig, displayableTsconfigPath, 
 		var compilerOptions = existingConfig["compilerOptions"];
 		compilerOptions["baseUrl"] = ".";
 		compilerOptions["paths"] = compilerOptions["paths"] || {};
+
+		const appPath = getAppPath(projectDir);
 		compilerOptions["paths"]["~/*"] = compilerOptions["paths"]["~/*"] || [
-			"app/*"
+			`${appPath}/*`
 		];
 		compilerOptions["paths"]["*"] = compilerOptions["paths"]["*"] || [
 			"./node_modules/tns-core-modules/*",
 			"./node_modules/*"
 		];
+	}
+}
+
+function getAppPath(projectDir) {
+	const DEFAULT_PATH = "app";
+	const nsConfigPath = path.join(projectDir, "nsconfig.json");
+
+	try {
+		const nsConfig = JSON.parse(fs.readFileSync(nsConfigPath));
+		const appPath = nsConfig && nsConfig.appPath;
+		return appPath || DEFAULT_PATH;
+	} catch(_) {
+		return DEFAULT_PATH;
 	}
 }
