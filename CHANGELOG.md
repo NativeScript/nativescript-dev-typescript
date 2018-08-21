@@ -1,3 +1,10 @@
+<a name="0.7.2"></a>
+## [0.7.2](https://github.com/NativeScript/nativescript-dev-typescript/compare/v0.7.1...v0.7.2) (2018-08-21)
+
+### Bug Fixes
+
+* **watch:** add support for ts 2.9 ([8449614](https://github.com/NativeScript/nativescript-dev-typescript/commit/8449614))
+
 
 <a name="0.7.1"></a>
 ## [0.7.1](https://github.com/NativeScript/nativescript-dev-typescript/compare/v0.7.0...v0.7.1) (2018-04-13)
