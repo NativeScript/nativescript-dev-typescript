@@ -1,3 +1,13 @@
+<a name="0.7.3"></a>
+## [0.7.3](https://github.com/NativeScript/nativescript-dev-typescript/compare/v0.7.2...v0.7.3) (2018-08-21)
+
+
+### Bug Fixes
+
+* respect nsconfig options when updating tsconfig on postinstall ([#61](https://github.com/NativeScript/nativescript-dev-typescript/issues/61)) ([396180c](https://github.com/NativeScript/nativescript-dev-typescript/commit/396180c)), closes [#60](https://github.com/NativeScript/nativescript-dev-typescript/issues/60)
+
+
+
 <a name="0.7.2"></a>
 ## [0.7.2](https://github.com/NativeScript/nativescript-dev-typescript/compare/v0.7.1...v0.7.2) (2018-08-21)
 
