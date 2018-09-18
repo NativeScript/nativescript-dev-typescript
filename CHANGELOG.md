@@ -1,3 +1,12 @@
+<a name="0.7.4"></a>
+## [0.7.4](https://github.com/NativeScript/nativescript-dev-typescript/compare/v0.7.3...v0.7.4) (2018-09-18)
+
+
+### Bug Fixes
+
+* stop syncing TS files outside the app folder (e.g. plugins in node_modules)([0936a03](https://github.com/NativeScript/nativescript-dev-typescript/commit/0936a03)),
+
+
 <a name="0.7.3"></a>
 ## [0.7.3](https://github.com/NativeScript/nativescript-dev-typescript/compare/v0.7.2...v0.7.3) (2018-08-21)
 
