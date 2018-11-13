@@ -19,7 +19,7 @@ if (projectDir) {
         createReferenceFile();
     }
 
-    installTypescript(hasModules30);
+    installTypescript();
 }
 
 function createReferenceFile() {
@@ -63,16 +63,14 @@ function getProjectTypeScriptVersion() {
     }
 }
 
-function installTypescript(hasModules30) {
+function installTypescript() {
     const installedTypeScriptVersion = getProjectTypeScriptVersion();
-    const force = shouldInstallLatest(installedTypeScriptVersion, hasModules30);
+    const force = shouldInstallLatest(installedTypeScriptVersion);
 
     if (installedTypeScriptVersion && !force) {
         console.log(`Project already targets TypeScript ${installedTypeScriptVersion}`);
     } else {
-        const command = force ?
-            "npm install -D typescript@latest" :
-            "npm install -D -E typescript@2.1.6"; // install exactly 2.1.6
+        const command = "npm install -D typescript@latest";
 
         console.log("Installing TypeScript...");
 
@@ -87,16 +85,18 @@ function installTypescript(hasModules30) {
     }
 }
 
-function shouldInstallLatest(tsVersion, hasModules30) {
-    if (!hasModules30) {
-        return false;
+function shouldInstallLatest(tsVersion) {
+    if (!tsVersion) {
+        return true;
     }
 
     const justVersion = clearPatch(tsVersion);
-    return !tsVersion ||
-        tsVersion === "2.2.0" ||
-        justVersion[0] < 2 || // ex. 1.8.10
-        justVersion[2] < 2; // ex. 2.1.6
+    const majorVer = justVersion[0];
+    const minorVer = justVersion[2];
+
+    return tsVersion === "2.2.0" ||
+        majorVer < 2 || // ex. 1.8.10
+        (majorVer === "2" && minorVer < 2); // ex. 2.1.6
 }
 
 function clearPatch(version) {
