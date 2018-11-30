@@ -18,8 +18,6 @@ if (projectDir) {
     if (!hasModules30) {
         createReferenceFile();
     }
-
-    installTypescript();
 }
 
 function createReferenceFile() {
@@ -47,60 +45,4 @@ function createTsconfig(tsconfigPath) {
     tsconfig.exclude = ["node_modules", "platforms"];
 
     fs.writeFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 4));
-}
-
-function getProjectTypeScriptVersion() {
-    try {
-        var packageJsonPath = path.join(projectDir, "package.json"),
-            packageJsonContent = fs.readFileSync(packageJsonPath, "utf8"),
-            jsonContent = JSON.parse(packageJsonContent);
-
-        return (jsonContent.dependencies && jsonContent.dependencies.typescript) ||
-            (jsonContent.devDependencies && jsonContent.devDependencies.typescript);
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
-}
-
-function installTypescript() {
-    const installedTypeScriptVersion = getProjectTypeScriptVersion();
-    const force = shouldInstallLatest(installedTypeScriptVersion);
-
-    if (installedTypeScriptVersion && !force) {
-        console.log(`Project already targets TypeScript ${installedTypeScriptVersion}`);
-    } else {
-        const command = "npm install -D typescript@latest";
-
-        console.log("Installing TypeScript...");
-
-        require("child_process").exec(command, { cwd: projectDir }, (err, stdout, stderr) => {
-            if (err) {
-                console.warn(`npm: ${err.toString()}`);
-            }
-
-            process.stdout.write(stdout);
-            process.stderr.write(stderr);
-        });
-    }
-}
-
-function shouldInstallLatest(tsVersion) {
-    if (!tsVersion) {
-        return true;
-    }
-
-    const justVersion = clearPatch(tsVersion);
-    const majorVer = justVersion[0];
-    const minorVer = justVersion[2];
-
-    return tsVersion === "2.2.0" ||
-        majorVer < 2 || // ex. 1.8.10
-        (majorVer === "2" && minorVer < 2); // ex. 2.1.6
-}
-
-function clearPatch(version) {
-    return version && (version.startsWith("~") || version.startsWith("^")) ?
-        version.substring(1) :
-        version;
 }
