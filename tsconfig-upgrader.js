@@ -10,7 +10,7 @@ var __migrations = [
 
 function migrateProject(tsConfig, tsconfigPath, projectDir) {
 	var displayableTsconfigPath = path.relative(projectDir, tsconfigPath);
-	__migrations.forEach(function(migration) {
+	__migrations.forEach(function (migration) {
 		migration(tsConfig, displayableTsconfigPath, projectDir);
 	});
 }
@@ -32,7 +32,7 @@ function migrateTsConfig(tsconfigPath, projectDir) {
 		fs.writeFileSync(tsconfigPath, JSON.stringify(existingConfig, null, 4));
 	}
 
-	withTsConfig(function(existingConfig) {
+	withTsConfig(function (existingConfig) {
 		migrateProject(existingConfig, displayableTsconfigPath, projectDir);
 	});
 }
@@ -54,47 +54,17 @@ function addIterableToAngularProjects(existingConfig, displayableTsconfigPath, p
 	var dependencies = packageJson.dependencies || [];
 
 	var hasAngular = Object.keys(dependencies).includes("nativescript-angular");
-    var hasRelevantAngularVersion = /[4-9]\.\d+\.\d+/i.test(dependencies["@angular/core"]);
-	if (hasAngular && hasRelevantAngularVersion) {
-        console.log("Adding 'es2015.iterable' lib to tsconfig.json...");
+	if (hasAngular) {
+		console.log("Adding 'es2015.iterable' lib to tsconfig.json...");
 		addTsLib(existingConfig, "es2015.iterable");
 	}
 }
 
-function hasModules30(projectDir) {
-	function relevantModulesVersion(version) {
-		return /[3-9]\.\d+\.\d+/i.test(version);
-	}
-
-	function hasRelevantModulesDependency() {
-		var packageJsonPath = path.join(projectDir, "package.json");
-		var packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
-		var dependencies = packageJson.dependencies || [];
-
-		return relevantModulesVersion(dependencies["tns-core-modules"]);
-	}
-
-	function hasRelevantModulesPackage() {
-		var packageJsonPath = path.join(projectDir, "node_modules", "tns-core-modules", "package.json");
-		if (!fs.existsSync(packageJsonPath)) {
-			return false;
-		}
-
-		var packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
-		return relevantModulesVersion(packageJson.version);
-	}
-
-	return hasRelevantModulesDependency() || hasRelevantModulesPackage();
-}
-exports.hasModules30 = hasModules30;
-
 function addDomLibs(existingConfig, displayableTsconfigPath, projectDir) {
-	if (hasModules30(projectDir)) {
-		console.log("Adding 'es6' lib to tsconfig.json...");
-		addTsLib(existingConfig, "es6");
-		console.log("Adding 'dom' lib to tsconfig.json...");
-		addTsLib(existingConfig, "dom");
-	}
+	console.log("Adding 'es6' lib to tsconfig.json...");
+	addTsLib(existingConfig, "es6");
+	console.log("Adding 'dom' lib to tsconfig.json...");
+	addTsLib(existingConfig, "dom");
 }
 
 function addTsLib(existingConfig, libName) {
@@ -103,31 +73,29 @@ function addTsLib(existingConfig, libName) {
 		if (!options.lib) {
 			options.lib = [];
 		}
-		if (!options.lib.find(function(l) {
-				return libName.toLowerCase() === l.toLowerCase();
-			})) {
+		if (!options.lib.find(function (l) {
+			return libName.toLowerCase() === l.toLowerCase();
+		})) {
 			options.lib.push(libName);
 		}
 	}
 }
 
 function addTnsCoreModulesPathMappings(existingConfig, displayableTsconfigPath, projectDir) {
-	if (hasModules30(projectDir)) {
-		console.log("Adding tns-core-modules path mappings lib to tsconfig.json...");
-		existingConfig["compilerOptions"] = existingConfig["compilerOptions"] || {};
-		var compilerOptions = existingConfig["compilerOptions"];
-		compilerOptions["baseUrl"] = ".";
-		compilerOptions["paths"] = compilerOptions["paths"] || {};
+	console.log("Adding tns-core-modules path mappings lib to tsconfig.json...");
+	existingConfig["compilerOptions"] = existingConfig["compilerOptions"] || {};
+	var compilerOptions = existingConfig["compilerOptions"];
+	compilerOptions["baseUrl"] = ".";
+	compilerOptions["paths"] = compilerOptions["paths"] || {};
 
-		const appPath = getAppPath(projectDir);
-		compilerOptions["paths"]["~/*"] = compilerOptions["paths"]["~/*"] || [
-			`${appPath}/*`
-		];
-		compilerOptions["paths"]["*"] = compilerOptions["paths"]["*"] || [
-			"./node_modules/tns-core-modules/*",
-			"./node_modules/*"
-		];
-	}
+	const appPath = getAppPath(projectDir);
+	compilerOptions["paths"]["~/*"] = compilerOptions["paths"]["~/*"] || [
+		`${appPath}/*`
+	];
+	compilerOptions["paths"]["*"] = compilerOptions["paths"]["*"] || [
+		"./node_modules/tns-core-modules/*",
+		"./node_modules/*"
+	];
 }
 
 function getAppPath(projectDir) {
@@ -138,7 +106,7 @@ function getAppPath(projectDir) {
 		const nsConfig = JSON.parse(fs.readFileSync(nsConfigPath));
 		const appPath = nsConfig && nsConfig.appPath;
 		return appPath || DEFAULT_PATH;
-	} catch(_) {
+	} catch (_) {
 		return DEFAULT_PATH;
 	}
 }
