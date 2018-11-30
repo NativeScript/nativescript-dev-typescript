@@ -1,6 +1,6 @@
 {
   "name": "nativescript-dev-typescript",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "description": "TypeScript support for NativeScript projects. Install using `tns install typescript`.",
   "scripts": {
     "test": "exit 0",
@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "nativescript-hook": "^0.2.0",
-    "semver": "5.5.0"
+    "semver": "5.5.0",
+    "typescript": "~3.1.1"
   }
 }
