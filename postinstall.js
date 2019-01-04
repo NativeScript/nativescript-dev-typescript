@@ -13,20 +13,6 @@ if (projectDir) {
     } else {
         createTsconfig(tsconfigPath);
     }
-
-    const hasModules30 = upgrader.hasModules30(projectDir);
-    if (!hasModules30) {
-        createReferenceFile();
-    }
-}
-
-function createReferenceFile() {
-    var referenceFilePath = path.join(projectDir, "references.d.ts"),
-        content = "/// <reference path=\"./node_modules/tns-core-modules/tns-core-modules.d.ts\" /> Needed for autocompletion and compilation.";
-
-    if (!fs.existsSync(referenceFilePath)) {
-        fs.appendFileSync(referenceFilePath, content);
-    }
 }
 
 function createTsconfig(tsconfigPath) {
