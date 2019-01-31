@@ -5,7 +5,6 @@ var __migrations = [
 	inlineSourceMapMigration,
 	addDomLibs,
 	addIterableToAngularProjects,
-	addTnsCoreModulesPathMappings,
 ];
 
 function migrateProject(tsConfig, tsconfigPath, projectDir) {
@@ -79,23 +78,6 @@ function addTsLib(existingConfig, libName) {
 			options.lib.push(libName);
 		}
 	}
-}
-
-function addTnsCoreModulesPathMappings(existingConfig, displayableTsconfigPath, projectDir) {
-	console.log("Adding tns-core-modules path mappings lib to tsconfig.json...");
-	existingConfig["compilerOptions"] = existingConfig["compilerOptions"] || {};
-	var compilerOptions = existingConfig["compilerOptions"];
-	compilerOptions["baseUrl"] = ".";
-	compilerOptions["paths"] = compilerOptions["paths"] || {};
-
-	const appPath = getAppPath(projectDir);
-	compilerOptions["paths"]["~/*"] = compilerOptions["paths"]["~/*"] || [
-		`${appPath}/*`
-	];
-	compilerOptions["paths"]["*"] = compilerOptions["paths"]["*"] || [
-		"./node_modules/tns-core-modules/*",
-		"./node_modules/*"
-	];
 }
 
 function getAppPath(projectDir) {
