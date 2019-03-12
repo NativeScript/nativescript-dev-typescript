@@ -1,3 +1,9 @@
+### Bug Fixes
+
+* Non-meaningful messages are printed in the default output(https://github.com/NativeScript/nativescript-dev-typescript/issues/79))
+<a name="0.8.0"></a>
+## [0.8.0](https://github.com/NativeScript/nativescript-dev-typescript/compare/v0.7.4...v0.8.0) (2019-03-12)
+
 <a name="0.7.4"></a>
 ## [0.7.4](https://github.com/NativeScript/nativescript-dev-typescript/compare/v0.7.3...v0.7.4) (2018-09-18)
 
