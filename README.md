@@ -1,5 +1,7 @@
 # NativeScript TypeScript
 
+## `nativescript-dev-typescript` is deprecated in favour of  `bundle` workflow, which will be introduced with CLI v6.0. More info about the upcoming new approach can be found [here](https://www.nativescript.org/blog/the-future-of-building-nativescript-apps). 
+
 A package providing TypeScript support for NativeScript.
 
 [NativeScript](https://www.nativescript.org/) is a framework which enables developers to write truly native mobile applications for Android and iOS using JavaScript and CSS. [Angular](https://angular.io/) is one of the most popular open source JavaScript frameworks for application development. We [worked closely with developers at Google](http://angularjs.blogspot.bg/2015/12/building-mobile-apps-with-angular-2-and.html) to make Angular in NativeScript a reality. The result is a software architecture that allows you to build mobile apps using the same framework—and in some cases the same code—that you use to build Angular web apps, with the performance you’d expect from native code. [Read more about building truly native mobile apps with NativeScript and Angular](https://docs.nativescript.org/tutorial/ng-chapter-0).
