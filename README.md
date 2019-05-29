@@ -1,6 +1,6 @@
 # NativeScript TypeScript
 
-## `nativescript-dev-sass` is deprecated in favour of  `bundle` workflow, which will be introduced with CLI v6.0. More info about the upcoming new approach can be found [here](https://www.nativescript.org/blog/the-future-of-building-nativescript-apps). 
+## `nativescript-dev-typescript` is deprecated in favour of  `bundle` workflow, which will be introduced with CLI v6.0. More info about the upcoming new approach can be found [here](https://www.nativescript.org/blog/the-future-of-building-nativescript-apps). 
 
 A package providing TypeScript support for NativeScript.
 
