@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "nativescript-hook": "^0.2.0",
-    "semver": "5.5.0",
+    "semver": "5.7.2",
     "typescript": "~3.4.5"
   }
 }
